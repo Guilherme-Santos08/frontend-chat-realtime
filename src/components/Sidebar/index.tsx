@@ -1,10 +1,30 @@
-/* eslint-disable @next/next/no-img-element */
-import { ScrollArea, ScrollBar } from '../ui/scroll-area'
-import { NavItem } from './nav-item'
+import {
+  ConversationList,
+  ConversationListProps,
+} from './components/conversation-list'
+import {
+  OnlineUserList,
+  OnlineUserListProps,
+} from './components/online-user-list'
+
+const conversationList: ConversationListProps['conversationList'] = Array.from(
+  { length: 15 },
+  (_, index) => ({
+    name: `Name ${index + 1}`,
+    avatar: `https://api.multiavatar.com/Starcrasher${index + 1}.png`,
+  })
+)
+
+const onlineUserList: OnlineUserListProps['onlineUserList'] = Array.from(
+  { length: 15 },
+  (_, index) => ({
+    avatar: `https://api.multiavatar.com/Starcrasher${index + 1}.png`,
+  })
+)
 
 export function Sidebar() {
   return (
-    <aside className="flex flex-col border-r">
+    <aside className="max-h-screen flex flex-col border-r">
       <header className="flex items-center gap-4 px-4 py-5 border-b">
         <div className="rounded-full w-12">
           <img
@@ -19,41 +39,14 @@ export function Sidebar() {
         </div>
       </header>
 
-      <div className="mt-6 px-4">
+      <div className="mt-6 px-4 space-y-3">
         <h2 className="font-bold">Online now</h2>
-        <div className="mt-2">
-          {/* Use o componente ScrollArea com orientação horizontal */}
-          <ScrollArea>
-            <div className="flex gap-2 pb-5">
-              {Array.from({ length: 9 }).map((_, i) => (
-                <div className="relative rounded-full w-10" key={i}>
-                  <img
-                    src="https://api.multiavatar.com/Starcrasher.png"
-                    alt="Foto do Usuario"
-                    className="w-full h-full rounded-full object-cover"
-                  />
-                  <span className="absolute w-3 h-3 top-0 right-0 rounded-full bg-green-400 border"></span>
-                </div>
-              ))}
-            </div>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
-        </div>
+        <OnlineUserList onlineUserList={onlineUserList} />
       </div>
 
-      <nav className="mt-2">
+      <nav className="mt-2 space-y-3">
         <h2 className="px-3 font-bold">Messages</h2>
-        <div className="mt-2">
-          <ScrollArea className="h-[400px]">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <NavItem
-                title="Guilherme"
-                avatar="https://api.multiavatar.com/Starcrasher1.png"
-                key={i}
-              />
-            ))}
-          </ScrollArea>
-        </div>
+        <ConversationList conversationList={conversationList} />
       </nav>
     </aside>
   )
