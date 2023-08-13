@@ -1,9 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { io } from 'socket.io-client'
-
-const socket = io('http://localhost:3333')
+import { socket } from '@/lib/socket'
 
 export default function Chat() {
   socket.on('connect', () => {
